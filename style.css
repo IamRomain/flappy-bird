@@ -1,0 +1,94 @@
+body {
+	background-color: cadetblue;
+	font-family: "FlappyBird";
+}
+
+.screen {
+	width: 350px;
+	margin: 25px auto 0px;
+	cursor: pointer;
+}
+
+@font-face {
+	font-family: FlappyBird;
+	src: url('assets/fonts/flappy.ttf');
+}
+
+/* Window */
+
+.window {
+	height: 450px;
+	background: url('https://s30.postimg.org/tycvlfagh/background.png');
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+.clickable-div {
+	cursor: pointer;
+}
+
+/* Bird */
+
+.bird {
+	position: absolute;
+	bottom: 40%;
+	left: 40%;
+
+	height: 32px;
+	width: 40px;
+}
+
+#bird {
+	height: 32px;
+	width: 40px;
+}
+
+
+/* Score */
+
+.score-border {
+	width: 350px;
+	height: 70px;
+	margin-top: -28px;
+	background: url(./assets/images/bg.png);
+
+	display: table;
+}
+
+
+.score {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	align-content: center;
+	padding-top: 1.5rem;
+	color: white;
+	font-size: 32px;
+	font-family: FlappyBird;
+}
+
+
+/* Pipes */
+
+.pipe {
+	width: 60px;
+	height: 100%;
+	position: absolute;
+	right: -60px;
+	z-index: 2;
+}
+
+.pipe .obstacleHaut {
+	background: url(./assets/images/pipe.png) bottom;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.pipe .obstacleBas {
+	background: url(./assets/images/pipe.png) top;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
