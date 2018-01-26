@@ -1,13 +1,16 @@
 $(function start() {
-	$window = $('.window'),
-		$bird = $('.bird'),
-		tempsChute = 1000, // in msecs time for flappy to fall from the top of the screen if no action
-		jeuActif = false, // start in pause mode
-		obstacleId = 0, // to have unique identifier per pipe
-		score = 0, // start with 0
+	$window = $('.window');
+	$bird = $('.bird');
+	tempsChute = 1000; // in msecs time for flappy to fall from the top of the screen if no action
+	jeuActif = false; // start in pause mode
+	obstacleId = 0; // to have unique identifier per pipe
+	backgroundId = 1;
+	score = -1; // start with 0
 
-		espacePipe = 180, // average
-		timeCall = 1800; // time between the call of the functions below
+	espacePipe = 120; // average
+	timeCall = 2000; // time between the call of the functions below
+
+	var soundJump = document.getElementById("soundJump");
 
 
 	// timer 1800  mseconds main loop
@@ -37,13 +40,21 @@ $(function start() {
 	$(window).keydown(function keyboardManagement(key) {
 		// manage only the space key
 		if (key.keyCode === 32) {
+			var holdHelp = setTimeout(function () {
+				$('#help').css('visibility', 'hidden')
+			}, 1500);
 			if (jeuActif === false) {
 				jeuActif = true; // first start
+				$('#help').css("display", "none;");
 			}
 			// no need to test here
 			if (jeuActif === true) {
 
 				deplacementBird();
+
+				//play jump sound
+				soundJump.currentTime = 0;
+				soundJump.play();
 			}
 			key.preventDefault();
 
@@ -73,18 +84,16 @@ $(function start() {
 		if (parseInt($bird.css('top')) > 40) { // can not fly too high.....
 
 			// rotate up and up 60 px
-			$bird.css('transform', 'rotate(-20deg)');
+			$bird.css('transform', 'rotate(-35deg)');
 			$bird.stop().animate({
 				bottom: '+=60px'
-			}, 200, function () {
-				// toucheSol();
+			}, 220, function () {
 				// rotate flat after 200 ms
 				$bird.css('transform', 'rotate(0deg)');
 				$bird.stop().animate({
 					bottom: '-=60px'
-				}, 200, 'linear', function () {
+				}, 250, 'linear', function () {
 					// rotate down and start falling down
-					// toucheSol();
 					gravity();
 				});
 			});
@@ -105,14 +114,26 @@ $(function start() {
 	}
 
 	// genere un obstacle sur 2 en haut puis en bas
-	function genererObstacle() {
+	//	function genererObstacle() {
+	//
+	//		obstacleId++;
+	//
+	//		hauteurObstacle = Math.floor(Math.random() * (espacePipe + 1)) + espacePipe * 0.8;
+	//
+	//		const obstacleType = (obstacleId % 2 == 0) ? "obstacleHaut" : "obstacleBas";
+	//		obstacle = '<div class="pipe" id="' + obstacleId + '"><div style="height: ' + hauteurObstacle + 'px" class="' + obstacleType + '"></div></div>';
+	//
+	//		$('.window').append(obstacle);
+	//	}
 
+	// genere les obstacles au même endroit 
+	function genererObstacle() {
 		obstacleId++;
 
-		hauteurObstacle = Math.floor(Math.random() * (espacePipe + 1)) + espacePipe * 0.8;
+		hauteurObstacleHaut = Math.floor(Math.random() * ($window.height() - 250)) + 50;
+		hauteurObstacleBas = $window.height() - (hauteurObstacleHaut + espacePipe);
 
-		const obstacleType = (obstacleId % 2 == 0) ? "obstacleHaut" : "obstacleBas";
-		obstacle = '<div class="pipe" id="' + obstacleId + '"><div style="height: ' + hauteurObstacle + 'px" class="' + obstacleType + '"></div></div>';
+		obstacle = '<div class="pipe" id="' + obstacleId + '"><div style="height: ' + hauteurObstacleHaut + 'px" class="obstacleHaut"></div></div><div class="pipe" id="' + obstacleId + '"><div style="height: ' + hauteurObstacleBas + 'px" class="obstacleBas"></div></div>';
 
 		$('.window').append(obstacle);
 	}
@@ -122,10 +143,10 @@ $(function start() {
 		$('.pipe').each(function () {
 			$(this).animate({
 				right: '+=300px'
-			}, 1800, 'linear');
-
+			}, 2500, 'linear');
 		});
 	}
+
 
 	// remove the first pipe
 	function suppObstacle() {
@@ -175,19 +196,18 @@ $(function start() {
 			const bas = $(this).find('.obstacleBas') // need to adjust rectangle depending on obstace type
 			if (bas.length) {
 				console.log("pipe bas:" + bas + " " + positionPipe[2] + " " + positionPipe[3] + "==>", bas.position());
-				positionPipe[2] = bas.position().top + 40;
+				positionPipe[2] = bas.position().top + 26;
 
 			} else {
 				const haut = $(this).find('.obstacleHaut')
 				console.log("pipe haut:" + bas + " " + positionPipe[2] + " " + positionPipe[3] + "==>", haut.position());
-				positionPipe[3] = haut.height() + 40;
+				positionPipe[3] = haut.height() + 26;
 			}
 
 			console.log("positionPipe:", positionPipe);
 			var bad = collision(positionBird, positionPipe);
 			if (bad) {
-				alert("collision detected\nflappy:" + Math.floor(positionBird[0]) + " " + Math.floor(positionBird[1]) + " " + Math.floor(positionBird[2]) + " " + Math.floor(positionBird[3]) +
-					"\npipe:" + Math.floor(positionPipe[0]) + " " + Math.floor(positionPipe[1]) + " " + Math.floor(positionPipe[2]) + " " + Math.floor(positionPipe[3]));
+				//alert("collision detected\nflappy:" + Math.floor(positionBird[0]) + " " + Math.floor(positionBird[1]) + " " + Math.floor(positionBird[2]) + " " + Math.floor(positionBird[3]) +"\npipe:" + Math.floor(positionPipe[0]) + " " + Math.floor(positionPipe[1]) + " " + Math.floor(positionPipe[2]) + " " + Math.floor(positionPipe[3]));
 
 				gameOver();
 			}
@@ -213,7 +233,17 @@ $(function start() {
 		$(".animated").css('animation-play-state', 'paused');
 		$(".animated").css('-webkit-animation-play-state', 'paused');
 
-		alert("game over");
+		//		alert("game over");
+		$('.score').css("display", "none");
+		$(".scoreboard").css("display", "block");
+
+		$('#scoreGame').text(score).css({
+			"color": "black",
+			"font-family": "FlappyBird",
+			"font-size": "20px"
+		});
+
+
 
 
 	}

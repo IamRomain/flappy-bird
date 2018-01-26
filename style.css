@@ -9,6 +9,18 @@ body {
 	cursor: pointer;
 }
 
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: none !important;
+	cursor: default;
+}
+
 @font-face {
 	font-family: FlappyBird;
 	src: url('assets/fonts/flappy.ttf');
@@ -18,29 +30,44 @@ body {
 
 .window {
 	height: 450px;
-	background: url('https://s30.postimg.org/tycvlfagh/background.png');
+	background: url('assets/images/bg.png');
 	position: relative;
 	overflow: hidden;
 	margin-bottom: 10px;
+
+	display: flex;
 }
 
 .clickable-div {
 	cursor: pointer;
 }
 
+
+#help {
+	position: absolute;
+	opacity: 1;
+	top: 180px;
+	left: 65px;
+	width: 188px;
+	height: 170px;
+	background-image: url('assets/images/splash.png');
+	background-repeat: no-repeat;
+}
+
+
 /* Bird */
 
 .bird {
 	position: absolute;
-	bottom: 40%;
-	left: 40%;
+	bottom: 30%;
+	left: 20%;
 
-	height: 32px;
+	height: 30px;
 	width: 40px;
 }
 
 #bird {
-	height: 32px;
+	height: 28px;
 	width: 40px;
 }
 
@@ -48,10 +75,11 @@ body {
 /* Score */
 
 .score-border {
+	position: absolute;
 	width: 350px;
 	height: 70px;
 	margin-top: -28px;
-	background: url(./assets/images/bg.png);
+	background: url(./assets/images/ground.png);
 
 	display: table;
 }
@@ -68,6 +96,39 @@ body {
 	font-family: FlappyBird;
 }
 
+
+.scoreboard {
+	position: absolute;
+	display: none;
+	opacity: 1;
+	top: 125px;
+	left: 57px;
+	width: 236px;
+	height: 280px;
+	background-image: url('./assets/images/scoreboard.png');
+	background-repeat: no-repeat;
+
+	z-index: 1000;
+}
+
+#replay {
+	position: absolute;
+	opacity: 1;
+	top: 200px;
+	left: 62px;
+	height: 115px;
+	width: 70px;
+	cursor: pointer;
+}
+
+#scoreGame {
+	position: absolute;
+	top: 105px;
+	left: 107px;
+	width: 104px;
+	height: 20px;
+	text-align: right;
+}
 
 /* Pipes */
 

@@ -10,26 +10,47 @@
 
 <body>
 	<div class="screen">
-		<div class="window clickable-div">
+		<div class="window">
+
+			<div id="help"></div>
+
 			<div class="bird">
 				<img id="bird" src="assets/images/bird.gif">
 			</div>
+
 			<div class="pipe" id="-2">
 				<div style="height:1px" class="obstacleHaut"></div>
 			</div>
+
 			<div class="pipe" id="-1">
 				<div style="height:1px" class="obstacleBas"></div>
 			</div>
+
+			<div class="scoreboard">
+				<div id="medal"></div>
+				<div id="scoreGame"></div>
+				<div id="highscore"></div>
+				<div id="replay"><a href="index.html"><img src="assets/images/replay.png"></a></div>
+			</div>
+
 		</div>
 		<br/>
 		<div class="score-border">
 			<p class="score">Press Space to begin</p>
 		</div>
+
+		<audio id="soundJump" src="assets/sounds/wing.ogg" autostart="false"></audio>
+
+		<!--		//sounds var volume = 30; var soundJump = new buzz.sound("assets/sounds/wing.ogg"); var soundScore = new buzz.sound("assets/sounds/point.ogg"); var soundHit = new buzz.sound("assets/sounds/hit.ogg"); var soundDie = new buzz.sound("assets/sounds/die.ogg"); var soundSwoosh = new buzz.sound("assets/sounds/swooshing.ogg"); buzz.all().setVolume(volume);-->
+
+
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+	<script src="./onStart.js"></script>
 	<script src="./flappy.js"></script>
+	<script src="./noInspect.js"></script>
 
 </body>
 
