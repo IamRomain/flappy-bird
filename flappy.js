@@ -7,7 +7,7 @@ $(function start() {
 	backgroundId = 1;
 	score = -1; // start with 0
 
-	espacePipe = 120; // average
+	espacePipe = 140; // average
 	timeCall = 2000; // time between the call of the functions below
 
 	var soundJump = document.getElementById("soundJump");
@@ -41,8 +41,11 @@ $(function start() {
 		// manage only the space key
 		if (key.keyCode === 32) {
 			var holdHelp = setTimeout(function () {
-				$('#help').css('visibility', 'hidden')
-			}, 1500);
+				$('#help').css({
+					visibility: 'hidden',
+					opacity: '0'
+				});
+			}, 1800);
 			if (jeuActif === false) {
 				jeuActif = true; // first start
 				$('#help').css("display", "none;");
@@ -196,12 +199,12 @@ $(function start() {
 			const bas = $(this).find('.obstacleBas') // need to adjust rectangle depending on obstace type
 			if (bas.length) {
 				console.log("pipe bas:" + bas + " " + positionPipe[2] + " " + positionPipe[3] + "==>", bas.position());
-				positionPipe[2] = bas.position().top + 26;
+				positionPipe[2] = bas.position().top + 28;
 
 			} else {
 				const haut = $(this).find('.obstacleHaut')
 				console.log("pipe haut:" + bas + " " + positionPipe[2] + " " + positionPipe[3] + "==>", haut.position());
-				positionPipe[3] = haut.height() + 26;
+				positionPipe[3] = haut.height() + 28;
 			}
 
 			console.log("positionPipe:", positionPipe);
